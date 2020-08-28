@@ -19,8 +19,7 @@ class Track:
         self.minuto = self.minuto_abs - self.min_first_track
         self.hora = self.hora_abs - self.hr_first_track
         if self.minuto < 0:
-            self.minuto += 60
-            self.hora -= 1
+            self.minuto = self.hora * 60 + self.minuto
 
 
 def convert(path_origen):
@@ -37,7 +36,7 @@ def convert(path_origen):
 
     with open("./tracklist_convertida.txt", "wt") as f:
         for track in track_list:
-            f.write(f"{str(track.hora).zfill(2)}:{str(track.minuto).zfill(2)} : {track.nombre}")
+            f.write(f"{str(track.minuto).zfill(2)}:00 : {track.nombre}")
     print("Convertido! -> tracklist_convertida.txt")
 
 
