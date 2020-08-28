@@ -1,3 +1,4 @@
+import time
 def get_first_track_time(path_origen):
     with open(path_origen, "r") as f:
         for i, line in enumerate(f):
@@ -18,7 +19,7 @@ class Track:
     def get_time(self):
         self.minuto = self.minuto_abs - self.min_first_track
         self.hora = self.hora_abs - self.hr_first_track
-        if self.minuto < 0:
+        if self.minuto < 0 or (self.minuto == 0 and self.hora != 0):
             self.minuto = self.hora * 60 + self.minuto
 
 
@@ -34,10 +35,11 @@ def convert(path_origen):
             track.get_time()
             track_list.append(track)
 
-    with open("./tracklist_convertida.txt", "wt") as f:
+    with open(path_origen, "wt") as f:
         for track in track_list:
             f.write(f"{str(track.minuto).zfill(2)}:00 : {track.nombre}")
     print("Convertido! -> tracklist_convertida.txt")
+    time.sleep(2)
 
 
 while True:
